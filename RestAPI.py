@@ -44,7 +44,7 @@ def update_bill(update_packet = None, **kwargs):
 
     # This will let you use the funciton in a variety of ways without need to rewrite it for specific cases
     if update_packet is None: update_packet = {}
-    if not kwargs: update_packet.update(kwargs)
+    if kwargs: update_packet.update(kwargs)
 
     illegal_keys = list(set(update_packet.keys()) -  set(allowed_fields))
     for key in illegal_keys: del update_packet[key]
@@ -62,6 +62,23 @@ def update_bill(update_packet = None, **kwargs):
     # I can't test to determine
     return "result" in results.keys()
 
+def create_customer_file(customer_id, file_name, file_path, create_path=False, **kwargs):
+    headers = {"Authorization" : "Basic " + auth_key}
+    
+    packet = {
+        "customerID":customer_id,
+        "fileName"  : file_name,
+    }
+
+    with open(file_path, 'rb') as f:
+        packet["fileData"] = f.read()
+
+    if kwargs: packet.update(kwargs)
+
+    r = requests.patch(primary_endpoint+"bill", data=packet, headers=headers)
+
+    results = r.json()
+    return requests
 # This is the recommended way of providing an entry point for a python script. If this isn't here, code will run from the top down
 
 if __name__ == "__main__":
