@@ -75,7 +75,7 @@ def create_customer_file(customer_id, file_name, file_path, create_path=False, *
 
     if kwargs: packet.update(kwargs)
 
-    r = requests.patch(primary_endpoint+"bill", data=packet, headers=headers)
+    r = requests.patch(primary_endpoint+"file", data=packet, headers=headers)
 
     results = r.json()
     return results
