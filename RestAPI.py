@@ -78,7 +78,7 @@ def create_customer_file(customer_id, file_name, file_path, create_path=False, *
     r = requests.patch(primary_endpoint+"bill", data=packet, headers=headers)
 
     results = r.json()
-    return requests
+    return results
 # This is the recommended way of providing an entry point for a python script. If this isn't here, code will run from the top down
 
 if __name__ == "__main__":
